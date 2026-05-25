@@ -61,23 +61,26 @@ The square format makes it easier to use the images in grid-based interfaces, bu
 
 ## Folder structure
 
-The repository is organized by country or region.
+The repository is organized by country or region inside the `tv-logos` folder.
 
 ### Example
 
 ```text
-germany/
-  ard-de.png
-  zdf-de.png
+tv-logos/
+  germany/
+    ard-de.png
+    zdf-de.png
 
-austria/
-  orf-1-at.png
+  austria/
+    orf-1-at.png
 
-united-kingdom/
-  bbc-one-uk.png
+  united-kingdom/
+    bbc-one-uk.png
+
+misc/
 ```
 
-The folder structure is intentionally simple so users can quickly find logos by region or country.
+The `misc` folder remains at the repository root for files that do not belong to a specific country or region. The folder structure is intentionally simple so users can quickly find logos by region or country.
 
 ## Source and conversion process
 
