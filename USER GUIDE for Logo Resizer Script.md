@@ -6,6 +6,8 @@ The script converts image files from a folder into PNG files. Every converted im
 
 You do not need programming knowledge to use this guide.
 
+[logo_resizer.py](https://github.com/ArcticMunkee/Remote3-TV-Logo-Project/blob/main/logo_resizer.py)
+
 ## What This Script Does
 
 The script asks you for a folder on your computer.
