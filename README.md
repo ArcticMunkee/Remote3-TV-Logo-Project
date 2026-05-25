@@ -1,2 +1,2 @@
-# remote3-tv-icons
-A repository for tv channel logos for Unfolded Circle's Remote 3
+# Remote3-TV-Icons
+A TV channel logo repository for Unfolded Circle's Remote 3
