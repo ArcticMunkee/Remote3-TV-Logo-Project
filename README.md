@@ -29,7 +29,7 @@ If you want to convert your own TV channel logos into the required 500 × 500 px
 
 A step-by-step guide for non-technical users is available here:
 
-[User Guide for the Logo Resizer Script](USER%20GUIDE%20for%20Logo%20Resizer%20Script.md)
+[LOGO RESIZER GUIDE](LOGO%20RESIZER%20GUIDE.md)
 
 ## Image specifications
 
