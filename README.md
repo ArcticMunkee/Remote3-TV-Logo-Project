@@ -1,4 +1,6 @@
 # Remote3 TV Logo Project
+<img width="1200" height="318" alt="image" src="https://github.com/user-attachments/assets/88c57d43-9949-4205-a85a-888314f3ec02" />
+
 
 A curated TV channel logo repository optimized for use with **Unfolded Circle's Remote 3** and media center environments such as **Kodi**.
 
