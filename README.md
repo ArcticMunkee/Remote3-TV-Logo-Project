@@ -23,6 +23,14 @@ Kodi benefits from logos that are large enough to appear clean and sharp in medi
 
 For that reason, the logos in this repository have been converted into a standardized **1:1 image format**.
 
+## Creating your own icons
+
+If you want to convert your own TV channel logos into the required 500 × 500 px PNG format, you can use the included Python helper script.
+
+A step-by-step guide for non-technical users is available here:
+
+[User Guide for the Logo Resizer Script](USER%20GUIDE%20for%20Logo%20Resizer%20Script.md)
+
 ## Image specifications
 
 All logos in this repository should follow these specifications:
