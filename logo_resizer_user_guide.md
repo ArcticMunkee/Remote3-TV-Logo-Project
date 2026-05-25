@@ -1,4 +1,4 @@
-# How to Use `logo_resizer.py`
+# Guide | How to Use `logo_resizer.py`
 
 This guide explains how to use the `logo_resizer.py` script.
 
