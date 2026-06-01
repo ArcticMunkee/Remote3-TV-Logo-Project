@@ -151,13 +151,19 @@ These logos can be used for:
 
 The repository is primarily intended for personal and non-commercial use.
 
-## Important note about rights and trademarks
+## License, asset rights, and trademarks
 
-This repository contains TV channel logos that may be protected by copyright, trademark, or brand ownership rights.
+The source code, scripts, documentation, and repository structure are provided under the MIT License. This includes helper scripts such as `logo_resizer.py`.
 
-The logos are provided as a convenience for personal media center and remote control usage. This repository does not claim ownership of the original channel logos, trademarks, or brand assets.
+The TV channel logos themselves are different. They may be protected by copyright, trademark, service mark, trade name, or other brand ownership rights and remain the property of their respective owners.
 
-If you are a rights holder and want a logo removed or changed, please open an issue or contact the repository owner.
+The logos are provided as a convenience for personal media center, IPTV, Home Assistant, Kodi, and Unfolded Circle Remote 3 usage. This repository does not claim ownership of the original channel logos, trademarks, channel names, or brand assets.
+
+The MIT License does not grant rights to third-party logos or trademarks contained in `tv-logos/`, `misc/`, or other asset folders. For more details, see:
+
+[ASSET_RIGHTS.md](ASSET_RIGHTS.md)
+
+If you are a rights holder and want a logo removed, corrected, renamed, or attributed differently, please open an issue or contact the repository owner.
 
 ## Credit
 
