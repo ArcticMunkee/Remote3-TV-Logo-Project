@@ -2,7 +2,10 @@
 
 from __future__ import annotations
 
+import argparse
+import shlex
 import shutil
+import sys
 from pathlib import Path
 
 from PIL import Image, ImageOps
@@ -10,7 +13,7 @@ from PIL import Image, ImageOps
 
 DEFAULT_CANVAS_SIZE = 500
 DEFAULT_PADDING = 10
-DEFAULT_OUTPUT_SUFFIX = "_png_500"
+DEFAULT_OUTPUT_DIR_NAME = "converted_png_500"
 
 IMAGE_EXTENSIONS = {
     ".png",
@@ -24,6 +27,43 @@ IMAGE_EXTENSIONS = {
 }
 
 
+def normalize_folder(path: Path) -> Path:
+    folder = path.expanduser().resolve()
+
+    if not folder.exists():
+        raise FileNotFoundError(f"The folder does not exist: {folder}")
+
+    if not folder.is_dir():
+        raise NotADirectoryError(f"The specified path is not a folder: {folder}")
+
+    return folder
+
+
+def path_from_user_input(user_input: str) -> Path:
+    raw_path = Path(user_input.strip().strip("\"'")).expanduser()
+
+    if raw_path.exists():
+        return raw_path
+
+    try:
+        parts = shlex.split(user_input)
+    except ValueError:
+        return raw_path
+
+    if len(parts) == 1:
+        return Path(parts[0]).expanduser()
+
+    return raw_path
+
+
+def path_is_inside(path: Path, parent: Path) -> bool:
+    try:
+        path.relative_to(parent)
+        return True
+    except ValueError:
+        return False
+
+
 def ask_for_source_folder() -> Path:
     while True:
         user_input = input("Enter source folder: ").strip()
@@ -32,17 +72,11 @@ def ask_for_source_folder() -> Path:
             print("Please enter a folder path.")
             continue
 
-        source_dir = Path(user_input).expanduser().resolve()
-
-        if not source_dir.exists():
-            print(f"The folder does not exist: {source_dir}")
+        try:
+            return normalize_folder(path_from_user_input(user_input))
+        except (FileNotFoundError, NotADirectoryError) as exc:
+            print(exc)
             continue
-
-        if not source_dir.is_dir():
-            print(f"The specified path is not a folder: {source_dir}")
-            continue
-
-        return source_dir
 
 
 def ask_yes_no(question: str, default: bool = False) -> bool:
@@ -73,6 +107,38 @@ def should_skip_file(path: Path, include_mosaics: bool) -> bool:
         return True
 
     return False
+
+
+def collect_source_files(
+    source_dir: Path,
+    output_dir: Path,
+    include_mosaics: bool,
+) -> tuple[list[Path], int, int]:
+    source_files: list[Path] = []
+    skipped = 0
+    ignored_output_files = 0
+    excluded_dirs = {
+        output_dir,
+        (source_dir / DEFAULT_OUTPUT_DIR_NAME).resolve(),
+    }
+
+    for source_path in source_dir.rglob("*"):
+        if not source_path.is_file():
+            continue
+
+        resolved_source_path = source_path.resolve()
+
+        if any(path_is_inside(resolved_source_path, excluded_dir) for excluded_dir in excluded_dirs):
+            ignored_output_files += 1
+            continue
+
+        if should_skip_file(source_path, include_mosaics):
+            skipped += 1
+            continue
+
+        source_files.append(source_path)
+
+    return source_files, skipped, ignored_output_files
 
 
 def resize_logo_to_canvas(
@@ -143,25 +209,30 @@ def convert_folder(
     padding: int = DEFAULT_PADDING,
     upscale: bool = False,
     include_mosaics: bool = False,
+    clean_output: bool = True,
 ) -> None:
+    source_dir = normalize_folder(source_dir)
+    output_dir = output_dir.expanduser().resolve()
+
+    if output_dir == source_dir:
+        raise ValueError("Output folder must be different from the source folder.")
+
     processed = 0
-    skipped = 0
     failed = 0
 
-    if output_dir.exists():
+    if clean_output and output_dir.exists():
         print(f"Deleting old output folder: {output_dir}")
         shutil.rmtree(output_dir)
 
+    source_files, skipped, ignored_output_files = collect_source_files(
+        source_dir=source_dir,
+        output_dir=output_dir,
+        include_mosaics=include_mosaics,
+    )
+
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    for source_path in source_dir.rglob("*"):
-        if not source_path.is_file():
-            continue
-
-        if should_skip_file(source_path, include_mosaics):
-            skipped += 1
-            continue
-
+    for source_path in source_files:
         relative_path = source_path.relative_to(source_dir)
         target_relative_path = relative_path.with_suffix(".png")
         target_path = output_dir / target_relative_path
@@ -185,44 +256,117 @@ def convert_folder(
     print("Done.")
     print(f"Processed: {processed}")
     print(f"Skipped: {skipped}")
+    print(f"Ignored existing output files: {ignored_output_files}")
     print(f"Failed: {failed}")
     print(f"Output folder: {output_dir.resolve()}")
 
 
-def main() -> None:
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description=(
+            "Convert local image folders to PNG files on a transparent "
+            "500x500px canvas."
+        )
+    )
+    parser.add_argument(
+        "source_dir",
+        nargs="?",
+        type=Path,
+        help="Folder containing the images to convert. If omitted, the script asks interactively.",
+    )
+    parser.add_argument(
+        "-o",
+        "--output-dir",
+        type=Path,
+        help=(
+            "Folder for converted images. Defaults to a "
+            f"'{DEFAULT_OUTPUT_DIR_NAME}' subfolder inside the source folder."
+        ),
+    )
+    parser.add_argument(
+        "--canvas-size",
+        type=int,
+        default=DEFAULT_CANVAS_SIZE,
+        help=f"Output canvas size in pixels. Defaults to {DEFAULT_CANVAS_SIZE}.",
+    )
+    parser.add_argument(
+        "--padding",
+        type=int,
+        default=DEFAULT_PADDING,
+        help=f"Transparent padding in pixels. Defaults to {DEFAULT_PADDING}.",
+    )
+    parser.add_argument(
+        "--upscale",
+        action="store_true",
+        help="Upscale smaller logos so they use more of the canvas.",
+    )
+    parser.add_argument(
+        "--include-mosaics",
+        action="store_true",
+        help="Also process files with 'mosaic' in the filename.",
+    )
+    parser.add_argument(
+        "--clean-output",
+        action="store_true",
+        help=(
+            "Delete an existing custom output folder before writing. "
+            "The default source subfolder is cleaned automatically."
+        ),
+    )
+    return parser.parse_args()
+
+
+def main() -> int:
+    args = parse_args()
+
     print("PNG converter for local image folders")
     print("All supported images will be converted to PNG and placed on a transparent 500x500px canvas.")
     print()
 
-    source_dir = ask_for_source_folder()
-    output_dir = source_dir.parent / f"{source_dir.name}{DEFAULT_OUTPUT_SUFFIX}"
+    if args.source_dir:
+        source_dir = normalize_folder(args.source_dir)
+        include_mosaics = args.include_mosaics
+        upscale = args.upscale
+    else:
+        source_dir = ask_for_source_folder()
 
-    include_mosaics = ask_yes_no(
-        "Should files with 'mosaic' in the name also be processed?",
-        default=False,
-    )
+        include_mosaics = ask_yes_no(
+            "Should files with 'mosaic' in the name also be processed?",
+            default=False,
+        )
 
-    upscale = ask_yes_no(
-        "Should smaller logos be upscaled?",
-        default=False,
-    )
+        upscale = ask_yes_no(
+            "Should smaller logos be upscaled?",
+            default=False,
+        )
+
+    output_dir = args.output_dir.expanduser().resolve() if args.output_dir else source_dir / DEFAULT_OUTPUT_DIR_NAME
+    clean_output = args.clean_output or args.output_dir is None
 
     print()
     print(f"Source folder: {source_dir}")
     print(f"Output folder: {output_dir}")
-    print(f"Canvas: {DEFAULT_CANVAS_SIZE}x{DEFAULT_CANVAS_SIZE}px")
-    print(f"Padding: {DEFAULT_PADDING}px")
+    print(f"Canvas: {args.canvas_size}x{args.canvas_size}px")
+    print(f"Padding: {args.padding}px")
+    print(f"Clean output folder: {'yes' if clean_output else 'no'}")
     print()
 
-    convert_folder(
-        source_dir=source_dir,
-        output_dir=output_dir,
-        canvas_size=DEFAULT_CANVAS_SIZE,
-        padding=DEFAULT_PADDING,
-        upscale=upscale,
-        include_mosaics=include_mosaics,
-    )
+    try:
+        convert_folder(
+            source_dir=source_dir,
+            output_dir=output_dir,
+            canvas_size=args.canvas_size,
+            padding=args.padding,
+            upscale=upscale,
+            include_mosaics=include_mosaics,
+            clean_output=clean_output,
+        )
+    except Exception as exc:
+        print(f"ERROR: {exc}")
+        return 1
+
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

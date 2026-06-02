@@ -27,6 +27,16 @@ For that reason, the logos in this repository have been converted into a standar
 
 If you want to convert your own TV channel logos into the required 500 × 500 px PNG format, you can use the included Python helper script.
 
+The script can be run from any location and can process any image folder on your computer. It does not require the images to follow this repository's `tv-logos` folder structure.
+
+Basic command:
+
+```bash
+python3 logo_resizer.py /path/to/your/image-folder
+```
+
+By default, converted files are written to a `converted_png_500` subfolder inside the selected source folder. You can choose a different output folder with `--output-dir`.
+
 A step-by-step guide for non-technical users is available here:
 
 [LOGO RESIZER GUIDE](LOGO%20RESIZER%20GUIDE.md)

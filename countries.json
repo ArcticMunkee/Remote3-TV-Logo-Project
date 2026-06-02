@@ -3,9 +3,9 @@
   "repository": "ArcticMunkee/Remote3-TV-Logo-Project",
   "branch": "main",
   "total_tv_logos": 9737,
-  "total_misc_logos": 874,
+  "total_misc_logos": 974,
   "total_countries_or_regions": 60,
-  "total_misc_categories": 10,
+  "total_misc_categories": 11,
   "countries_or_regions": [
     {
       "slug": "albania",
@@ -449,6 +449,13 @@
       "path": "misc/custom",
       "count": 4,
       "github_url": "https://github.com/ArcticMunkee/Remote3-TV-Logo-Project/tree/main/misc/custom"
+    },
+    {
+      "slug": "dazn-custom",
+      "name": "Dazn Custom",
+      "path": "misc/dazn-custom",
+      "count": 100,
+      "github_url": "https://github.com/ArcticMunkee/Remote3-TV-Logo-Project/tree/main/misc/dazn-custom"
     },
     {
       "slug": "flags",

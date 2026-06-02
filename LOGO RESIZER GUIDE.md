@@ -10,7 +10,7 @@ You do not need programming knowledge to use this guide.
 
 ## What This Script Does
 
-The script asks you for a folder on your computer.
+The script can be started with a source folder directly from the command line, or it can ask you for a folder interactively.
 
 It then scans this folder and all subfolders for supported image files.
 
@@ -40,6 +40,8 @@ proportional resizing
 ```
 
 The original files are not changed.
+
+By default, the converted files are written to a `converted_png_500` subfolder inside your selected source folder.
 
 ## What You Need
 
@@ -182,7 +184,7 @@ My Logos
 └── test-icons
 ```
 
-## Step 5: Start the Script
+## Step 5: Start the Script With a Source Folder
 
 Open Terminal, Command Prompt, or PowerShell.
 
@@ -190,33 +192,115 @@ Navigate to the folder where `logo_resizer.py` is saved.
 
 ### macOS Example
 
-If the script is in your Downloads folder:
+If the script is in this folder:
 
 ```bash
-cd ~/Downloads
+~/Downloads/pyfile
 ```
 
-Start the script:
+and your images are in this folder:
+
+```bash
+~/Downloads/meine_anzupassenden_bilder
+```
+
+run:
+
+```bash
+cd ~/Downloads/pyfile
+python3 logo_resizer.py ~/Downloads/meine_anzupassenden_bilder
+```
+
+The converted files will be written to:
+
+```text
+~/Downloads/meine_anzupassenden_bilder/converted_png_500
+```
+
+### Windows Example
+
+If the script is in this folder:
+
+```powershell
+$env:USERPROFILE\Downloads\pyfile
+```
+
+and your images are in this folder:
+
+```powershell
+$env:USERPROFILE\Downloads\meine_anzupassenden_bilder
+```
+
+run:
+
+```powershell
+cd $env:USERPROFILE\Downloads\pyfile
+python logo_resizer.py $env:USERPROFILE\Downloads\meine_anzupassenden_bilder
+```
+
+The converted files will be written to:
+
+```text
+%USERPROFILE%\Downloads\meine_anzupassenden_bilder\converted_png_500
+```
+
+In this direct command mode, files with `mosaic` in the name are skipped by default and smaller logos are not upscaled by default.
+
+## Optional: Choose a Different Output Folder
+
+If you do not want the default `converted_png_500` subfolder, use `--output-dir`.
+
+### macOS Example
+
+```bash
+python3 logo_resizer.py ~/Downloads/meine_anzupassenden_bilder --output-dir ~/Downloads/resized_logos
+```
+
+### Windows Example
+
+```powershell
+python logo_resizer.py $env:USERPROFILE\Downloads\meine_anzupassenden_bilder --output-dir $env:USERPROFILE\Downloads\resized_logos
+```
+
+If a custom output folder already exists, the script writes into it and overwrites files with the same names. It does not delete the whole custom output folder unless you add `--clean-output`.
+
+## Optional: Include Mosaic Files or Upscale Small Logos
+
+Use `--include-mosaics` if files with `mosaic` in the filename should also be processed:
+
+```bash
+python3 logo_resizer.py ~/Downloads/meine_anzupassenden_bilder --include-mosaics
+```
+
+Use `--upscale` if smaller logos should be enlarged to use more of the 500x500 px canvas:
+
+```bash
+python3 logo_resizer.py ~/Downloads/meine_anzupassenden_bilder --upscale
+```
+
+Both options can be combined:
+
+```bash
+python3 logo_resizer.py ~/Downloads/meine_anzupassenden_bilder --include-mosaics --upscale
+```
+
+## Alternative: Start Interactive Mode
+
+You can also start the script without a source folder:
+
+### macOS
 
 ```bash
 python3 logo_resizer.py
 ```
 
-### Windows Example
-
-If the script is in your Downloads folder:
-
-```powershell
-cd $env:USERPROFILE\Downloads
-```
-
-Start the script:
+### Windows
 
 ```powershell
 python logo_resizer.py
 ```
 
-## Step 6: Enter the Source Folder
+## Step 6: Enter the Source Folder in Interactive Mode
 
 After starting the script, it asks:
 
@@ -320,7 +404,7 @@ The script continues with the next file.
 
 ## Step 10: Find the Converted PNG Files
 
-The script creates a new output folder next to your original source folder.
+By default, the script creates a new output folder inside your original source folder.
 
 If your source folder is called:
 
@@ -331,15 +415,17 @@ My Logos
 the output folder will be called:
 
 ```text
-My Logos_png_500
+converted_png_500
 ```
 
 Example:
 
 ```text
-Downloads
-├── My Logos
-└── My Logos_png_500
+My Logos
+├── channel-logos
+├── misc
+├── test-icons
+└── converted_png_500
 ```
 
 The converted PNG files are inside the new folder.
@@ -367,7 +453,7 @@ The script deletes the old output folder before creating a new one.
 For example, if this folder already exists:
 
 ```text
-My Logos_png_500
+converted_png_500
 ```
 
 the script deletes it and creates it again.
@@ -377,6 +463,8 @@ This prevents old files from being mixed with newly converted files.
 Only the output folder is deleted.
 
 The original source folder is not deleted or changed.
+
+This automatic deletion only applies to the default `converted_png_500` output folder. If you use a custom `--output-dir`, the script does not delete that folder unless you also add `--clean-output`.
 
 ## Common Problems
 
@@ -451,11 +539,14 @@ For most users, the best workflow is:
 
 ```text
 1. Put all images into one folder.
-2. Start logo_resizer.py.
-3. Enter the folder path.
-4. Press Enter when asked about mosaic files.
-5. Press Enter when asked about upscaling.
-6. Use the PNG files from the newly created _png_500 folder.
+2. Run logo_resizer.py with that folder path.
+3. Use the PNG files from the converted_png_500 subfolder.
+```
+
+Example:
+
+```bash
+python3 logo_resizer.py ~/Downloads/meine_anzupassenden_bilder
 ```
 
 ## What the Script Is Useful For
