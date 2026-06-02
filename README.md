@@ -82,6 +82,28 @@ misc/
 
 The `misc` folder remains at the repository root for files that do not belong to a specific country or region. The folder structure is intentionally simple so users can quickly find logos by region or country.
 
+## Manifest files
+
+This repository includes generated manifest files that make the logo collection easier to use from external tools:
+
+- `logos.json`
+- `logos.csv`
+- `countries.json`
+
+The manifests are generated from the current contents of `tv-logos/` and `misc/`. If logos are added, removed, renamed, or moved, regenerate the manifests locally before committing:
+
+```bash
+python3 scripts/generate_manifest.py
+```
+
+A GitHub Action verifies that the committed manifest files are up to date. The workflow does not modify the repository automatically; it fails when the manifests are missing or outdated so the updated files can be reviewed and committed intentionally.
+
+You can run the same check locally:
+
+```bash
+python3 scripts/generate_manifest.py --check
+```
+
 ## Source and conversion process
 
 The source material comes from the original **tv-logo/tv-logos** repository.
