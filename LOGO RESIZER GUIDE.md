@@ -195,26 +195,26 @@ Navigate to the folder where `logo_resizer.py` is saved.
 If the script is in this folder:
 
 ```bash
-~/Downloads/pyfile
+~/Downloads/logo-resizer
 ```
 
 and your images are in this folder:
 
 ```bash
-~/Downloads/meine_anzupassenden_bilder
+~/Downloads/images-to-resize
 ```
 
 run:
 
 ```bash
-cd ~/Downloads/pyfile
-python3 logo_resizer.py ~/Downloads/meine_anzupassenden_bilder
+cd ~/Downloads/logo-resizer
+python3 logo_resizer.py ~/Downloads/images-to-resize
 ```
 
 The converted files will be written to:
 
 ```text
-~/Downloads/meine_anzupassenden_bilder/converted_png_500
+~/Downloads/images-to-resize/converted_png_500
 ```
 
 ### Windows Example
@@ -222,26 +222,26 @@ The converted files will be written to:
 If the script is in this folder:
 
 ```powershell
-$env:USERPROFILE\Downloads\pyfile
+$env:USERPROFILE\Downloads\logo-resizer
 ```
 
 and your images are in this folder:
 
 ```powershell
-$env:USERPROFILE\Downloads\meine_anzupassenden_bilder
+$env:USERPROFILE\Downloads\images-to-resize
 ```
 
 run:
 
 ```powershell
-cd $env:USERPROFILE\Downloads\pyfile
-python logo_resizer.py $env:USERPROFILE\Downloads\meine_anzupassenden_bilder
+cd $env:USERPROFILE\Downloads\logo-resizer
+python logo_resizer.py $env:USERPROFILE\Downloads\images-to-resize
 ```
 
 The converted files will be written to:
 
 ```text
-%USERPROFILE%\Downloads\meine_anzupassenden_bilder\converted_png_500
+%USERPROFILE%\Downloads\images-to-resize\converted_png_500
 ```
 
 In this direct command mode, files with `mosaic` in the name are skipped by default and smaller logos are not upscaled by default.
@@ -253,13 +253,13 @@ If you do not want the default `converted_png_500` subfolder, use `--output-dir`
 ### macOS Example
 
 ```bash
-python3 logo_resizer.py ~/Downloads/meine_anzupassenden_bilder --output-dir ~/Downloads/resized_logos
+python3 logo_resizer.py ~/Downloads/images-to-resize --output-dir ~/Downloads/resized_logos
 ```
 
 ### Windows Example
 
 ```powershell
-python logo_resizer.py $env:USERPROFILE\Downloads\meine_anzupassenden_bilder --output-dir $env:USERPROFILE\Downloads\resized_logos
+python logo_resizer.py $env:USERPROFILE\Downloads\images-to-resize --output-dir $env:USERPROFILE\Downloads\resized_logos
 ```
 
 If a custom output folder already exists, the script writes into it and overwrites files with the same names. It does not delete the whole custom output folder unless you add `--clean-output`.
@@ -269,19 +269,19 @@ If a custom output folder already exists, the script writes into it and overwrit
 Use `--include-mosaics` if files with `mosaic` in the filename should also be processed:
 
 ```bash
-python3 logo_resizer.py ~/Downloads/meine_anzupassenden_bilder --include-mosaics
+python3 logo_resizer.py ~/Downloads/images-to-resize --include-mosaics
 ```
 
 Use `--upscale` if smaller logos should be enlarged to use more of the 500x500 px canvas:
 
 ```bash
-python3 logo_resizer.py ~/Downloads/meine_anzupassenden_bilder --upscale
+python3 logo_resizer.py ~/Downloads/images-to-resize --upscale
 ```
 
 Both options can be combined:
 
 ```bash
-python3 logo_resizer.py ~/Downloads/meine_anzupassenden_bilder --include-mosaics --upscale
+python3 logo_resizer.py ~/Downloads/images-to-resize --include-mosaics --upscale
 ```
 
 ## Alternative: Start Interactive Mode
@@ -546,7 +546,7 @@ For most users, the best workflow is:
 Example:
 
 ```bash
-python3 logo_resizer.py ~/Downloads/meine_anzupassenden_bilder
+python3 logo_resizer.py ~/Downloads/images-to-resize
 ```
 
 ## What the Script Is Useful For
