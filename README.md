@@ -4,11 +4,13 @@
 
 A curated TV channel logo repository optimized for use with **Unfolded Circle's Remote 3** and media center environments such as **Kodi**.
 
-This repository is based on the original **tv-logo/tv-logos** project:
+This repository started as a Remote 3 and media-center focused adaptation of the original **tv-logo/tv-logos** project:
 
 https://github.com/tv-logo/tv-logos
 
-The original project provides a large collection of high-quality TV channel logos from around the world. Most of the credit, appreciation, and recognition belongs to the original creator and maintainer of that project. This repository would not exist without the extensive work already done there.
+The original project provides a large collection of high-quality TV channel logos from around the world. A large part of this repository's foundation comes from that work, and the original creator and maintainer deserve significant credit and appreciation.
+
+This repository has since grown beyond a simple reformatting of the original collection. It now includes Remote 3 optimized formatting, generated manifest files, helper scripts, additional documentation, rights and trademark notes, workflow checks, and some custom-created logo assets.
 
 ## Purpose of this repository
 
@@ -197,9 +199,9 @@ The MIT License does not grant rights to third-party logos or trademarks contain
 
 If you are a rights holder and want a logo removed, corrected, renamed, or attributed differently, please open an issue or contact the repository owner.
 
-## Credit
+## Credit and project scope
 
-Most of the original logo collection work was done by the creator and maintainer of the original **tv-logo/tv-logos** repository.
+This project owes a great deal to the original **tv-logo/tv-logos** repository. Much of the original logo collection work was done there, and this repository would not exist in its current form without that foundation.
 
 Original project:
 
@@ -209,6 +211,8 @@ Original repository:
 
 https://github.com/tv-logo/tv-logos
 
-This repository is only a reformatted and Remote 3 optimized version of that work.
+This repository is not intended to replace the original project. It is a related, specialized project focused on Remote 3, Kodi, IPTV, media-center, and personal home-media use cases.
 
-All credit for the original logo collection belongs to the original project and its maintainer.
+In addition to reformatted assets from the original collection, this repository also includes its own project-specific work, such as custom-created logo assets, generated manifest files, helper scripts, documentation, and automation.
+
+Credit for the original logo collection belongs to the original project and its maintainer. Credit for the additional formatting, tooling, documentation, manifests, workflow setup, and custom additions belongs to this repository.
