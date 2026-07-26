@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "policy_id": "remote3-logo-quality-policy",
+  "policy_version": "1.0.0",
+  "status": "active",
+  "effective_date": "2026-07-26",
+  "quality_contract": {
+    "fail_closed": true,
+    "raw_sources_are_immutable": true,
+    "transparent_background_required": true,
+    "deterministic_changes_only": true,
+    "quarantine_ambiguous_candidates": true,
+    "optimize_for_precision_over_coverage": true
+  },
+  "asset_stages": [
+    "raw-source",
+    "master-candidate",
+    "approved-master",
+    "platform-output"
+  ],
+  "required_classifications": [
+    "asset-id",
+    "channel-or-logo-family",
+    "format-class",
+    "background-compatibility",
+    "processing-outcome",
+    "semantic-confidence",
+    "technical-confidence",
+    "transformation-confidence",
+    "fidelity-confidence"
+  ],
+  "background_compatibility": [
+    "on-light",
+    "on-dark",
+    "universal",
+    "unknown"
+  ],
+  "allowed_unattended_operations": [
+    "format-validation",
+    "safe-decoding",
+    "content-hashing",
+    "exact-content-deduplication",
+    "output-color-profile-normalization",
+    "transparent-canvas-normalization",
+    "border-connected-background-removal",
+    "alpha-unmatting",
+    "edge-color-decontamination",
+    "confirmed-border-line-removal",
+    "topology-preserving-edge-smoothing",
+    "proportional-resizing",
+    "target-canvas-placement",
+    "conservative-flat-color-vectorization",
+    "render-equivalent-svg-sanitization"
+  ],
+  "prohibited_unattended_operations": [
+    "image-generation",
+    "generative-inpainting",
+    "semantic-super-resolution",
+    "generative-super-resolution",
+    "freehand-ai-svg-path-generation",
+    "guessed-shape-reconstruction",
+    "automatic-lettering-font-replacement",
+    "global-white-pixel-removal",
+    "global-black-pixel-removal",
+    "blanket-full-color-inversion",
+    "unverified-topology-changing-smoothing",
+    "destructive-raw-source-modification",
+    "raster-embedding-presented-as-vectorization"
+  ],
+  "hard_gates": [
+    "semantic",
+    "integrity-and-safety",
+    "transparency",
+    "geometry-and-topology",
+    "fidelity",
+    "rendering",
+    "reproducibility"
+  ],
+  "processing_outcomes": [
+    "approved-original",
+    "approved-cleaned",
+    "needs-better-source",
+    "quarantine-ambiguous",
+    "manual-reconstruction-required"
+  ],
+  "replacement_requirements": [
+    "confirmed-semantic-identity",
+    "matching-market",
+    "matching-era",
+    "matching-layout",
+    "matching-background-variant",
+    "measurable-quality-improvement",
+    "passing-target-renderings",
+    "recoverable-previous-version"
+  ],
+  "out_of_scope": [
+    "per-file-attribution-manifest",
+    "individual-license-validation",
+    "copyright-gates",
+    "trademark-gates",
+    "early-public-filename-normalization",
+    "forced-conversion-of-every-candidate",
+    "speculative-manual-reconstruction-in-unattended-lane"
+  ],
+  "filename_normalization": {
+    "deferred": true,
+    "project_step": "1.268"
+  }
+}
